@@ -3,9 +3,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CatalogosModule } from './catalogos/catalogos.module';
+import { EstudiantesModule } from './estudiantes/estudiantes.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: [`.env`],
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -20,6 +25,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         synchronize: true, // Set to false in production
       }),
     }),
+    CatalogosModule,
+    EstudiantesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

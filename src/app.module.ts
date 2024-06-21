@@ -9,8 +9,9 @@ import * as fs from 'fs';
 
 let sslConfig = {};
 const caPath = process.env.CA_PATH;
+const existsCaPath = fs.existsSync(caPath);
 
-if (fs.existsSync(caPath)) {
+if (existsCaPath) {
   console.log('Exists certificate');
   sslConfig = {
     ca: fs.readFileSync(caPath).toString(),
@@ -36,6 +37,7 @@ if (fs.existsSync(caPath)) {
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         sslConfig,
+        ssl: existsCaPath,
       }),
     }),
     CatalogosModule,

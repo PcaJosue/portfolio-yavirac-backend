@@ -16,16 +16,14 @@ import { EstudiantesModule } from './estudiantes/estudiantes.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
+        autoLoadEntities: true,
+        synchronize: configService.get<boolean>('DB_SYNC'),
         host: configService.get<string>('DB_HOST'),
         port: configService.get<number>('DB_PORT'),
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: configService.get<boolean>('DB_SYNC'), // Set to false in production
-        ssl: {
-          rejectUnauthorized: false, // Esto se usa en desarrollo; en producción, revisa la configuración en la documentación de Render
-        },
+        ssl: false,
       }),
     }),
     CatalogosModule,

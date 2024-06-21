@@ -8,9 +8,12 @@ import { EstudiantesModule } from './estudiantes/estudiantes.module';
 import * as fs from 'fs';
 
 let sslConfig = {};
-if (process.env.NODE_ENV === 'production') {
+const caPath = process.env.CA_PATH;
+
+if (fs.existsSync(caPath)) {
+  console.log('Exists certificate');
   sslConfig = {
-    ca: fs.readFileSync(process.env.CA_PATH).toString(),
+    ca: fs.readFileSync(caPath).toString(),
     rejectUnauthorized: true,
   };
 }

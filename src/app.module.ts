@@ -5,6 +5,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CatalogosModule } from './catalogos/catalogos.module';
 import { EstudiantesModule } from './estudiantes/estudiantes.module';
+import * as fs from 'fs';
+
+let sslConfig = {};
+if (process.env.NODE_ENV === 'production') {
+  sslConfig = {
+    ca: fs.readFileSync(process.env.CA_PATH).toString(),
+    rejectUnauthorized: true,
+  };
+}
 
 @Module({
   imports: [
@@ -23,7 +32,7 @@ import { EstudiantesModule } from './estudiantes/estudiantes.module';
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        ssl: false,
+        sslConfig,
       }),
     }),
     CatalogosModule,

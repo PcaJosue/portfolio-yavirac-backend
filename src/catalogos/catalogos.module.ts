@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ValorCatalogo } from 'src/entities/catalogo-valor.entity';
-import { Catalogo } from 'src/entities/catalogo.entity';
+import { Catalogo } from './catalogo.entity';
+import { ValorCatalogo } from './catalogo-valor.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Catalogo, ValorCatalogo])],

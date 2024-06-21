@@ -22,7 +22,10 @@ import { EstudiantesModule } from './estudiantes/estudiantes.module';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: true, // Set to false in production
+        synchronize: configService.get<boolean>('DB_SYNC'), // Set to false in production
+        ssl: {
+          rejectUnauthorized: false, // Esto se usa en desarrollo; en producción, revisa la configuración en la documentación de Render
+        },
       }),
     }),
     CatalogosModule,

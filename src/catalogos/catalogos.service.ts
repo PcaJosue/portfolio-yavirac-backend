@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Like } from 'typeorm';
+import { Repository, Like, ILike } from 'typeorm';
 import { Catalogo } from './entities/catalogo.entity';
 import { CreateCatalogoDto } from './dto/CreateCatalogo.dto';
 import { UpdateCatalogoDto } from './dto/UpdateCatalogo.dto';
@@ -42,10 +42,11 @@ export class CatalogoService {
   }
 
   async search(query: string): Promise<Catalogo[]> {
+    const lowerCaseQuery = query.toLowerCase(); // Convertir query a minúsculas
     return this.catalogoRepository.find({
       where: [
-        { nombre: Like(`%${query}%`) }, 
-        { descripcion: Like(`%${query}%`) },
+        { nombre: ILike(`%${lowerCaseQuery}%`) }, // Utiliza ILike para hacer LIKE case-insensitive
+        { descripcion: ILike(`%${lowerCaseQuery}%`) },
       ],
     });
   }

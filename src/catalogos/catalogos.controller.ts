@@ -12,7 +12,7 @@ export class CatalogoController {
 
   @Get()
   @ApiOkResponse({ status: 200, description: 'The query has been successfully.', type: Catalogo})
-  @ApiNotFoundResponse({ status: 404, description: 'Not Foud.'})
+  @ApiNotFoundResponse({ status: 404, description: 'Empty.'})
   async findAll(): Promise<Catalogo[]> {
     try{
       const result =  await this.catalogoService.getListarCatalogo();
@@ -47,7 +47,7 @@ export class CatalogoController {
   }
   
   @Get('/search/by')
-  @ApiOkResponse({ status: 200, description: 'The query has been successfully.', type: Catalogo})
+  @ApiOkResponse({ status: 200, description: 'The query has been successful.', type: Catalogo})
   @ApiNotFoundResponse({ status: 404, description: 'Not Foud.'})
   async search(@Query('query') query: string): Promise<Catalogo[]> {
     try{

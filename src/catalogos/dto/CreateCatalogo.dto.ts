@@ -1,8 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateCatalogoDto {
-  @ApiProperty({example: 'try 1', description: 'try description 1'})  
-  readonly nombre: string;
-  @ApiProperty({example: 'descricion', description: 'try description 1'}) 
-    readonly descripcion: string;
-  }
+  @ApiProperty({ example: 'Tipo de Sangre', description: 'El nombre del catálogo, por ejemplo, Tipo de Sangre' })
+  nombre: string;
+
+  @ApiProperty({ example: 'Lista de diferentes tipos de sangre disponibles', description: 'Descripción del catálogo, por ejemplo, una lista de diferentes tipos de sangre' })
+  descripcion: string;
+}

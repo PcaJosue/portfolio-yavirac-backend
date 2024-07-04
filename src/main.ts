@@ -7,7 +7,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Proyecto Backend')
-    .setDescription('API de Catalogos')
+    .setDescription('API de portafolio de practicas estudiantiles Yavirac')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

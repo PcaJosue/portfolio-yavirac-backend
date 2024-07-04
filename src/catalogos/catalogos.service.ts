@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like } from 'typeorm';
 import { Catalogo } from './entities/catalogo.entity';
@@ -14,15 +14,15 @@ export class CatalogoService {
     private readonly catalogoRepository: Repository<Catalogo>,
   ) {}
 
-  getListarCatalogo(): Promise<Catalogo[]> {
+  async getListarCatalogo(): Promise<Catalogo[]> {
     return this.catalogoRepository.find();
   }
 
-  findOne(id: number): Promise<Catalogo> {
+  async findOne(id: number): Promise<Catalogo> {
     return this.catalogoRepository.findOneBy({ id });
   }
 
-  create(createCatalogoDto: CreateCatalogoDto): Promise<Catalogo> {
+  async create(createCatalogoDto: CreateCatalogoDto): Promise<Catalogo> {
     const catalogo = this.catalogoRepository.create(createCatalogoDto);
     return this.catalogoRepository.save(catalogo);
   }
@@ -32,8 +32,13 @@ export class CatalogoService {
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
-    await this.catalogoRepository.delete(id);
+  async remove(id: number): Promise<Catalogo> {
+    const catalogoToRemove = await this.catalogoRepository.findOneBy({id});
+    if (!catalogoToRemove) {
+      throw new NotFoundException(`Catalogue with ID ${id} not found.`);
+    }
+    await this.catalogoRepository.remove(catalogoToRemove);
+    return catalogoToRemove; 
   }
 
   async search(query: string): Promise<Catalogo[]> {

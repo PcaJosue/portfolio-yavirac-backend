@@ -17,6 +17,6 @@ export class Catalogo {
   descripcion: string;
 
   @OneToMany(() => ValorCatalogo, valorCatalogo => valorCatalogo.catalogo)
-  valores: ValorCatalogo[];
+  valores?: ValorCatalogo[];
 }
  

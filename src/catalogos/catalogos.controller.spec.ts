@@ -1,4 +1,3 @@
-// catalogo.controller.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { CatalogoController } from './catalogos.controller';
 import { CatalogoService } from './catalogos.service';
@@ -9,7 +8,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 describe('CatalogoController', () => {
   let controller: CatalogoController;
   let service: CatalogoService;
-  let repository: Repository<Catalogo>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -20,6 +18,7 @@ describe('CatalogoController', () => {
           provide: getRepositoryToken(Catalogo),
           useClass: Repository,
         },
+        
       ],
     }).compile();
 
@@ -31,9 +30,7 @@ describe('CatalogoController', () => {
     expect(controller).toBeDefined();
   });
 
-
   it('findAll should return an array of Catalogo', async () => {
-    
     const expectedCatalogos: Catalogo[] = [
       { id: 1, nombre: 'Ejemplo 1', descripcion: 'Descripción 1' },
       { id: 2, nombre: 'Ejemplo 2', descripcion: 'Descripción 2' },

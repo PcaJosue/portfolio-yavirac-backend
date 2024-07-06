@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { ValorCatalogo } from 'src/catalogo-valor/entities/catalogo-valor.entity';
+import { ValorCatalogo } from '../../catalogo-valor/entities/catalogo-valor.entity';
 
 @Entity()
 export class Catalogo {

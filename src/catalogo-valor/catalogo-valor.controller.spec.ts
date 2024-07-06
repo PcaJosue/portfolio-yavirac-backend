@@ -40,6 +40,4 @@ describe('CatalogoValorController', () => {
     // Assert
     expect(result).toEqual(expectedValorCatalogos);
   });
-
-  
 });

@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { ValorCatalogo } from 'src/catalogo-valor/entities/catalogo-valor.entity';
 
 @Entity()
 export class Catalogo {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'catalogoId' })
   @ApiProperty({ example: 1, description: 'El identificador único del catálogo' })
   id: number;
 
@@ -14,4 +15,8 @@ export class Catalogo {
   @Column()
   @ApiProperty({ example: 'Lista de diferentes cursos disponibles', description: 'Descripción del catálogo, por ejemplo, una lista de diferentes cursos' })
   descripcion: string;
+
+  @OneToMany(() => ValorCatalogo, valorCatalogo => valorCatalogo.catalogo)
+  valores: ValorCatalogo[];
 }
+ 

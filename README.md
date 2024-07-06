@@ -71,3 +71,15 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+<---------------------------------------------------->
+Documentacion para usar los Catalogos en SWAGGER:
+
+1# RUNNING APP 
+
+npm run start:dev
+
+2# OPEN SWAGGER IN:
+
+http://localhost:3000/api#/
+

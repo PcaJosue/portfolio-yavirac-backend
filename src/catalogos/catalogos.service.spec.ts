@@ -1,4 +1,3 @@
-// catalogo.service.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { CatalogoService } from './catalogos.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -28,9 +27,9 @@ describe('CatalogoService', () => {
     expect(service).toBeDefined();
   });
 
-  // Ejemplo de prueba para getListarCatalogo
+
   it('getListarCatalogo should return an array of Catalogo', async () => {
-    // Simulamos un resultado esperado del repositorio
+    
     const expectedCatalogos: Catalogo[] = [
       { id: 1, nombre: 'Ejemplo 1', descripcion: 'Descripción 1' },
       { id: 2, nombre: 'Ejemplo 2', descripcion: 'Descripción 2' },
@@ -41,5 +40,5 @@ describe('CatalogoService', () => {
     expect(result).toEqual(expectedCatalogos);
   });
 
-  // Agrega más pruebas para otros métodos de CatalogoService
+  
 });

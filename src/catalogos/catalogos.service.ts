@@ -42,10 +42,10 @@ export class CatalogoService {
   }
 
   async search(query: string): Promise<Catalogo[]> {
-    const lowerCaseQuery = query.toLowerCase(); // Convertir query a minúsculas
+    const lowerCaseQuery = query.toLowerCase(); 
     return this.catalogoRepository.find({
       where: [
-        { nombre: ILike(`%${lowerCaseQuery}%`) }, // Utiliza ILike para hacer LIKE case-insensitive
+        { nombre: ILike(`%${lowerCaseQuery}%`) }, 
         { descripcion: ILike(`%${lowerCaseQuery}%`) },
       ],
     });

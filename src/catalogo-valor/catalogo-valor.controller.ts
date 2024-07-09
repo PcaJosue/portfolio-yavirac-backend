@@ -1,21 +1,21 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, Query, NotFoundException, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
-import { CatalogoService } from './catalogos.service';
-import { CreateCatalogoDto} from './dto/CreateCatalogo.dto';
-import { UpdateCatalogoDto } from './dto/UpdateCatalogo.dto';
-import { Catalogo } from './entities/catalogo.entity';
-import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { BadRequestException, Body, Controller, Delete, Get, HttpException, HttpStatus, NotFoundException, Param, Post, Put, Query } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ValorCatalogo } from './entities/catalogo-valor.entity';
+import { CatalogoValorService } from './catalogo-valor.service';
+import { CreateValorCatalogoDto } from './dto/CreateCatalogoValor.dto';
+import { UpdateValorCatalogoDto } from './dto/UpdateCatalogoValor.dto';
 
-@ApiTags('Catalogo')
-@Controller('catalogos')
-export class CatalogoController {
-  constructor(private readonly catalogoService: CatalogoService) {}
+@ApiTags('Catalogo-Valor')
+@Controller('catalogo-valor')
+export class CatalogoValorController {
+    constructor(private readonly catalogoValorService: CatalogoValorService) {}
 
   @Get()
-  @ApiOkResponse({ status: 200, description: 'The query has been successfully.', type: Catalogo})
+  @ApiOkResponse({ status: 200, description: 'The query has been successfully.', type: ValorCatalogo})
   @ApiNotFoundResponse({ status: 404, description: 'Empty.'})
-  async findAll(): Promise<Catalogo[]> {
+  async findAll(): Promise<ValorCatalogo[]> {
     try{
-      const result =  await this.catalogoService.getListarCatalogo();
+      const result =  await this.catalogoValorService.findAll();
       if(result.length == 0){
         throw new NotFoundException(`Empty`);
       }
@@ -29,11 +29,11 @@ export class CatalogoController {
   }
 
   @Get(':id')
-  @ApiOkResponse({ status: 200, description: 'Successfully retrieved item.', type: Catalogo})
+  @ApiOkResponse({ status: 200, description: 'Successfully retrieved item.', type: ValorCatalogo})
   @ApiNotFoundResponse({ status: 404, description: 'Item not found.' })
-  async findOne(@Param('id') id: number): Promise<Catalogo> {
+  async findOne(@Param('id') id: number): Promise<ValorCatalogo> {
     try {
-      const result = await this.catalogoService.findOne(id);
+      const result = await this.catalogoValorService.findOne(id);
       if (!result) {
         throw new NotFoundException(`Item with ID ${id} not found`);
       }
@@ -47,11 +47,11 @@ export class CatalogoController {
   }
   
   @Get('/search/by')
-  @ApiOkResponse({ status: 200, description: 'The query has been successful.', type: Catalogo})
+  @ApiOkResponse({ status: 200, description: 'The query has been successful.', type: ValorCatalogo})
   @ApiNotFoundResponse({ status: 404, description: 'Not Foud.'})
-  async search(@Query('query') query: string): Promise<Catalogo[]> {
+  async search(@Query('query') query: string): Promise<ValorCatalogo[]> {
     try{
-      const result = await this.catalogoService.search(query);
+      const result = await this.catalogoValorService.search(query);
       if(!result){
         throw new NotFoundException(`Item with ${query} not found`);
       }
@@ -65,16 +65,16 @@ export class CatalogoController {
   }
 
   @Post()
-  @ApiBody({ type: CreateCatalogoDto })
-  @ApiOkResponse({ status: 200, description: 'The Catalogue has been successfully created.', type: CreateCatalogoDto })
+  @ApiBody({ type: CreateValorCatalogoDto })
+  @ApiOkResponse({ status: 200, description: 'The Catalogue has been successfully created.', type: CreateValorCatalogoDto  })
   @ApiBadRequestResponse({ status: 400, description: 'Bad Request.' })
-  async create(@Body() createCatalogoDto: CreateCatalogoDto): Promise<Catalogo> {
+  async create(@Body() createValorCatalogoDto: CreateValorCatalogoDto ): Promise<ValorCatalogo> {
     try {
-      if (!createCatalogoDto || Object.keys(createCatalogoDto).length === 0) {
+      if (!createValorCatalogoDto || Object.keys(createValorCatalogoDto).length === 0) {
         throw new HttpException('Create data is empty.', HttpStatus.BAD_REQUEST);
       }
 
-      const result = await this.catalogoService.create(createCatalogoDto);
+      const result = await this.catalogoValorService.create(createValorCatalogoDto);
       return result;
     } catch (error) {
       if (error instanceof HttpException) {
@@ -85,16 +85,16 @@ export class CatalogoController {
   }
 
   @Put(':id')
-  @ApiBody({ type: UpdateCatalogoDto })
-  @ApiOkResponse({ status: 200, description: 'The Catalogue has been successfully updated.', type: UpdateCatalogoDto })
+  @ApiBody({ type: UpdateValorCatalogoDto  })
+  @ApiOkResponse({ status: 200, description: 'The Catalogue has been successfully updated.', type: UpdateValorCatalogoDto  })
   @ApiNotFoundResponse({ status: 404, description: 'Catalogue not found.' })
   @ApiBadRequestResponse({ status: 400, description: 'Bad Request.' })
-  async update(@Param('id') id: number, @Body() updateCatalogoDto: UpdateCatalogoDto) {
+  async update(@Param('id') id: number, @Body() updateCatalogoDto: UpdateValorCatalogoDto) {
     try {
       if (!updateCatalogoDto || Object.keys(updateCatalogoDto).length === 0) {
         throw new BadRequestException('Update data is empty.');
       }
-      const result = await this.catalogoService.update(id, updateCatalogoDto);
+      const result = await this.catalogoValorService.update(id, updateCatalogoDto);
 
       if (!result) {
         throw new NotFoundException(`Catalogue with ID ${id} not found.`);
@@ -110,11 +110,11 @@ export class CatalogoController {
   }
 
   @Delete(':id')
-  @ApiOkResponse({ status: 200, description: 'The Catalogue has been successfully deleted.', type: Catalogo })
+  @ApiOkResponse({ status: 200, description: 'The Catalogue has been successfully deleted.', type:  ValorCatalogo })
   @ApiNotFoundResponse({ status: 404, description: 'Catalogue not found.' })
-  async remove(@Param('id') id: number): Promise<Catalogo> {
+  async remove(@Param('id') id: number): Promise<ValorCatalogo> {
     try {
-      const deletedCatalogo = await this.catalogoService.remove(id);
+      const deletedCatalogo = await this.catalogoValorService.remove(id);
       if (!deletedCatalogo) {
         throw new NotFoundException(`Catalogue with ID ${id} not found.`);
       }
@@ -126,7 +126,4 @@ export class CatalogoController {
       throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-
-  
 }

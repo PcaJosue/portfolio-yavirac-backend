@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CatalogosModule } from './catalogos/catalogos.module';
 import { EstudiantesModule } from './estudiantes/estudiantes.module';
+import { CatalogoValorModule } from './catalogo-valor/catalogo-valor.module';
 import * as fs from 'fs';
 
 let sslConfig = {};
@@ -41,6 +42,7 @@ if (existsCaPath) {
     }),
     CatalogosModule,
     EstudiantesModule,
+    CatalogoValorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

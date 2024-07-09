@@ -20,7 +20,7 @@ export class ValorCatalogo {
   @Column()
   catalogoId: number; 
 
-  @ManyToOne(() => Catalogo, catalogo => catalogo.valores, { lazy: true, eager: true })
+  @ManyToOne(() => Catalogo, catalogo => catalogo.valores, { lazy: true })
   @JoinColumn({ name: 'catalogoId' }) 
   catalogo: Catalogo;
 

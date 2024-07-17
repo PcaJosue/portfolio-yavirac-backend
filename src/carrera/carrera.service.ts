@@ -17,7 +17,7 @@ export class CarreraService {
     async findAll(): Promise<Carrera[]> {
         return this.carreraRepository.find({
           relations: ['ValorCatalogo'],
-          select: ['id', 'nombreCarrera', 'nombresC', 'apellidosC', 'nombresD', 'apellidosD', 'periodoAcademico'],
+          select: ['id', 'nombreCarrera', 'periodoAcademico'],
         });
       }
     
@@ -30,14 +30,7 @@ export class CarreraService {
             const result = await this.carreraRepository.find({
                 where: [
                     { nombreCarrera: ILike(lowerCaseQuery) },
-                    { nombresC: ILike(lowerCaseQuery) },
-                    { apellidosC: ILike(lowerCaseQuery) },
-                    { nombresD: ILike(lowerCaseQuery) },
-                    { apellidosD: ILike(lowerCaseQuery) },
-                    { periodoAcademico: ILike(lowerCaseQuery) },
-                    { catalogo: { valor: ILike(lowerCaseQuery) } },
-                    { catalogo: { alias: ILike(lowerCaseQuery) } },
-                    { catalogo: { descripcion: ILike(lowerCaseQuery) } },
+                   
                 ],
                 relations: ['valorCatalogo'],
             });
@@ -48,7 +41,7 @@ export class CarreraService {
     }
 
     async create(createCarreraDto: CreateCarreraDto): Promise<Carrera> {
-        const carrera = this.carreraRepository.create(createCarreraDto);
+        const carrera = await this.carreraRepository.create(createCarreraDto);
         return this.carreraRepository.save(carrera);
     }
 

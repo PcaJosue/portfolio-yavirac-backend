@@ -8,35 +8,22 @@ export class Carrera {
     @ApiProperty({ example: 1, description: 'ID único generado automáticamente' })
     id: number;
 
-    @ApiProperty({ example: 'Diseño de Moda', description: 'Confeccion de Ropa' })
-    @Column()
-    nombreCarrera: string;
 
     @ApiProperty({ example: 'Hernan Pepito', description: 'Nombres del coordinador de carrera' })
     @Column()
-    nombresC: string;
+    coordinador: string;
 
-    @ApiProperty({ example: 'Altamirano Venegas', description: 'Apellidos del coordinador de carrera' })
-    @Column()
-    apellidosC: string;
 
     @ApiProperty({ example: 'Leonardo Paul', description: 'Nombres del Docente tutor' })
     @Column()
-    nombresD: string;
+    docentes: string[];
 
-    @ApiProperty({ example: 'Carrillo Arce', description: 'Apellidos del Docente tutor' })
-    @Column()
-    apellidosD: string;
 
-    @ApiProperty({ example: 'OCTUBRE 2023- FEBRERO 2024', description: 'Periodo Academico' })
-    @Column()
-    periodoAcademico: string;
+    @ManyToOne(() => ValorCatalogo, null, { lazy: true })
+    @JoinColumn({ name: 'id' }) 
+    periodoAcademico: ValorCatalogo;
 
-    @ApiProperty({ example: 1, description: 'ID Valor Catalogo' })
-    @Column()
-    valorCatalogoId: number;
-
-    @ManyToOne(() => ValorCatalogo, valorCatalogo => valorCatalogo.valores, { lazy: true })
-    @JoinColumn({ name: 'valorCatalogoId' }) 
-    catalogo: ValorCatalogo;
+    @ManyToOne(() => ValorCatalogo, null, { lazy: true })
+    @JoinColumn({ name: 'id' }) 
+    nombreCarrera: ValorCatalogo;
 }

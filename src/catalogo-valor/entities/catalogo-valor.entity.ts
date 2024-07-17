@@ -1,12 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { ApiProperty } from "@nestjs/swagger";
 import { Catalogo } from '../../catalogos/entities/catalogo.entity';
-import { Carrera } from 'src/carrera/entities/carrera.entity';
 
 @Entity()
 export class ValorCatalogo {
   @ApiProperty({ example: 1, description: 'ID único generado automáticamente' })
-  @PrimaryGeneratedColumn({name:'valorCatalogoId'})
+  @PrimaryGeneratedColumn()
   id: number;
 
   @ApiProperty({ example: 'O+', description: 'Tipo de Sangre, por ejemplo, O+' })
@@ -29,6 +28,5 @@ export class ValorCatalogo {
   @Column({ nullable: true })
   descripcion: string;
 
-  @OneToMany(() => Carrera, carrera => carrera.catalogo)
-  valores?: Carrera[];
+  
 }

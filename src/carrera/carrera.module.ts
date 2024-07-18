@@ -5,10 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ValorCatalogo } from 'src/catalogo-valor/entities/catalogo-valor.entity';
 import { Carrera } from './entities/carrera.entity';
 
-
 @Module({
-  imports: [TypeOrmModule.forFeature([ValorCatalogo,  Carrera])],
+  imports: [TypeOrmModule.forFeature([ValorCatalogo, Carrera])],
   providers: [CarreraService],
-  controllers: [CarreraController]
+  controllers: [CarreraController],
 })
 export class CarreraModule {}

@@ -1,17 +1,24 @@
-import { ApiProperty } from "@nestjs/swagger";
-
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateCarreraDto {
-
   @ApiProperty({ example: 'Diseño de Moda', description: 'Confeccion de Ropa' })
-  nombreCarrera: number;
+  nombreCarreraId: number;
 
-  @ApiProperty({ example: 'Leonardo Paul', description: 'Nombres del Docente tutor' })
+  @ApiProperty({
+    example: 'Leonardo Paul',
+    description: 'Nombres del Docente tutor',
+  })
   coordinador: string;
 
-  @ApiProperty({ example: 'Carrillo Arce', description: 'Apellidos del Docente tutor' })
+  @ApiProperty({
+    example: 'Carrillo Arce',
+    description: 'Apellidos del Docente tutor',
+  })
   docentes: string[];
 
-  @ApiProperty({ example: 'OCTUBRE 2023- FEBRERO 2024', description: 'Periodo Academico' })
-  periodoAcademico: number;
+  @ApiProperty({
+    example: 'OCTUBRE 2023- FEBRERO 2024',
+    description: 'Periodo Academico',
+  })
+  periodoAcademicoId: number;
 }

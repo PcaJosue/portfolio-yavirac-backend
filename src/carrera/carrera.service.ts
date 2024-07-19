@@ -19,22 +19,44 @@ export class CarreraService {
 
   async findAll(): Promise<Carrera[]> {
     return this.carreraRepository.find({
-      relations: ['ValorCatalogo'],
-      select: ['id', 'nombreCarrera', 'periodoAcademico'],
+      relations: ['periodoAcademico', 'nombreCarrera'],
+      select: ['id', 'coordinador', 'docentes'],
     });
   }
 
   async findOne(id: number): Promise<Carrera> {
-    return this.carreraRepository.findOneBy({ id });
+    const carrera = await this.carreraRepository.findOne({
+      where: { id },
+      relations: ['periodoAcademico', 'nombreCarrera'],
+    });
+    if (!carrera) {
+      throw new NotFoundException(`Carrera with ID ${id} not found.`);
+    }
+    return carrera;
   }
+
   async search(query: string): Promise<Carrera[]> {
     const lowerCaseQuery = `%${query.toLowerCase()}%`;
     try {
-      const result = await this.carreraRepository.find({
-        where: [{ nombreCarrera: ILike(lowerCaseQuery) }],
-        relations: ['valorCatalogo'],
+      
+      const coordinadorResults = await this.carreraRepository.find({
+        where: { coordinador: ILike(lowerCaseQuery) },
+        relations: ['periodoAcademico', 'nombreCarrera'],
       });
-      return result;
+  
+      
+      const allCarreras = await this.carreraRepository.find({
+        relations: ['periodoAcademico', 'nombreCarrera'],
+      });
+  
+      const filteredDocentesResults = allCarreras.filter(carrera =>
+        carrera.docentes.some(docente => docente.toLowerCase().includes(query.toLowerCase()))
+      );
+  
+     
+      const combinedResults = [...new Set([...coordinadorResults, ...filteredDocentesResults])];
+  
+      return combinedResults;
     } catch (error) {
       throw new HttpException(
         'Internal Server Error',
@@ -42,6 +64,9 @@ export class CarreraService {
       );
     }
   }
+  
+  
+  
 
   async create(createCarreraDto: CreateCarreraDto): Promise<Carrera> {
     const carrera = this.carreraRepository.create(createCarreraDto);

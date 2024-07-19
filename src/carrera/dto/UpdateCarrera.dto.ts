@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateCarreraDto {
-  @ApiProperty({ example: 'Diseño de Moda', description: 'Confeccion de Ropa' })
+  @ApiProperty({ example: 2, description: 'Confeccion de Ropa' })
   nombreCarreraId: number;
 
   @ApiProperty({
@@ -17,7 +17,7 @@ export class UpdateCarreraDto {
   docentes: string[];
 
   @ApiProperty({
-    example: 'OCTUBRE 2023- FEBRERO 2024',
+    example: 2,
     description: 'Periodo Academico',
   })
   periodoAcademicoId: number;

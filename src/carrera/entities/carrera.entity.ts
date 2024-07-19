@@ -1,12 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ValorCatalogo } from 'src/catalogo-valor/entities/catalogo-valor.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity()
 export class Carrera {
@@ -34,11 +28,11 @@ export class Carrera {
   @Column()
   nombreCarreraId: number;
 
-  @ManyToOne(() => ValorCatalogo, null, { lazy: true })
+  @ManyToOne(() => ValorCatalogo, { lazy: true })
   @JoinColumn({ name: 'periodoAcademicoId' })
   periodoAcademico: ValorCatalogo;
 
-  @ManyToOne(() => ValorCatalogo, null, { lazy: true })
+  @ManyToOne(() => ValorCatalogo, { lazy: true })
   @JoinColumn({ name: 'nombreCarreraId' })
   nombreCarrera: ValorCatalogo;
 }

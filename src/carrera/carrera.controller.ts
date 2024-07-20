@@ -1,24 +1,5 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpException,
-  HttpStatus,
-  NotFoundException,
-  Param,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiBody,
-  ApiNotFoundResponse,
-  ApiOkResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { BadRequestException, Body, Controller, Delete, Get, HttpException, HttpStatus, NotFoundException, Param, Post, Put, Query } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CarreraService } from './carrera.service';
 import { Carrera } from './entities/carrera.entity';
 import { CreateCarreraDto } from './dto/CreateCarrera.dto';
@@ -104,7 +85,7 @@ export class CarreraController {
   @ApiBody({ type: CreateCarreraDto })
   @ApiOkResponse({
     status: 200,
-    description: 'The Catalogue has been successfully created.',
+    description: 'The Carrera has been successfully created.',
     type: CreateCarreraDto,
   })
   @ApiBadRequestResponse({ status: 400, description: 'Bad Request.' })
@@ -135,10 +116,10 @@ export class CarreraController {
   @ApiBody({ type: UpdateCarreraDto })
   @ApiOkResponse({
     status: 200,
-    description: 'The Catalogue has been successfully updated.',
+    description: 'The Carrera has been successfully updated.',
     type: UpdateCarreraDto,
   })
-  @ApiNotFoundResponse({ status: 404, description: 'Catalogue not found.' })
+  @ApiNotFoundResponse({ status: 404, description: 'Carrera not found.' })
   @ApiBadRequestResponse({ status: 400, description: 'Bad Request.' })
   async update(
     @Param('id') id: number,
@@ -169,15 +150,15 @@ export class CarreraController {
   @Delete(':id')
   @ApiOkResponse({
     status: 200,
-    description: 'The Catalogue has been successfully deleted.',
+    description: 'The Carrera has been successfully deleted.',
     type: Carrera,
   })
-  @ApiNotFoundResponse({ status: 404, description: 'Catalogue not found.' })
+  @ApiNotFoundResponse({ status: 404, description: 'Carrera not found.' })
   async remove(@Param('id') id: number): Promise<Carrera> {
     try {
       const deletedCarrera = await this.carreraService.remove(id);
       if (!deletedCarrera) {
-        throw new NotFoundException(`Catalogue with ID ${id} not found.`);
+        throw new NotFoundException(`Carrera with ID ${id} not found.`);
       }
       return deletedCarrera;
     } catch (error) {

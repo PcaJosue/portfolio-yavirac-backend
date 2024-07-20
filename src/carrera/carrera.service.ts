@@ -1,9 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 import { Carrera } from './entities/carrera.entity';
@@ -53,7 +48,6 @@ export class CarreraService {
         carrera.docentes.some(docente => docente.toLowerCase().includes(query.toLowerCase()))
       );
   
-     
       const combinedResults = [...new Set([...coordinadorResults, ...filteredDocentesResults])];
   
       return combinedResults;
@@ -65,9 +59,6 @@ export class CarreraService {
     }
   }
   
-  
-  
-
   async create(createCarreraDto: CreateCarreraDto): Promise<Carrera> {
     const carrera = this.carreraRepository.create(createCarreraDto);
     return this.carreraRepository.save(carrera);
